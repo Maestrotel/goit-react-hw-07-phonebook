@@ -1,5 +1,8 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
-import { getContactsThunk } from 'redux/thunks/contactsThunk';
+import {
+  deleteContactsThunk,
+  getContactsThunk,
+} from 'redux/thunks/contactsThunk';
 
 const contactSlice = createSlice({
   name: 'contacts',
@@ -22,11 +25,11 @@ const contactSlice = createSlice({
     setFilter: (state, action) => {
       state.filter = action.payload;
     },
-    deleteContact(state, action) {
-      state.items = state.items.filter(
-        contact => contact.id !== action.payload
-      );
-    },
+    // deleteContact(state, action) {
+    //   state.items = state.items.filter(
+    //     contact => contact.id !== action.payload
+    //   );
+    // },
   },
   extraReducers: builder => {
     builder
@@ -34,11 +37,26 @@ const contactSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getContactsThunk.fulfilled, (state, action) => {
-        state.contacts = action.payload;
+        state.items = action.payload;
         state.isLoading = false;
         state.error = null;
       })
       .addCase(getContactsThunk.rejected, (state, action) => {
+        state.contacts = [];
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(deleteContactsThunk.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(deleteContactsThunk.fulfilled, (state, action) => {
+        state.items = state.items.filter(
+          contact => contact.id !== action.payload
+        );
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteContactsThunk.rejected, (state, action) => {
         state.contacts = [];
         state.error = action.payload;
         state.isLoading = false;

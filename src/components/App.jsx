@@ -4,6 +4,12 @@ import { Filter } from './Filter/Filter';
 import css from './App.module.css';
 
 export const App = () => {
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getContactsThunk());
+  // }, [dispatch]);
+
   return (
     <div className={css.mainSection}>
       <h1>Phonebook</h1>
