@@ -2,14 +2,11 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import css from './App.module.css';
+import { useSelector } from 'react-redux';
 
 export const App = () => {
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getContactsThunk());
-  // }, [dispatch]);
-
+  const isLoading = useSelector(state => state.contacts.isLoading);
+  console.log(isLoading);
   return (
     <div className={css.mainSection}>
       <h1>Phonebook</h1>
